@@ -1,0 +1,69 @@
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:App47"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:Behaviors="using:App47.Behaviors"
+      x:Class="App47.MainPage"
+      mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="ProductTemplate">
+            <Grid Height="80"
+                  Margin="0,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding ImageUrl}"
+                       Height="80"
+                       Width="80" />
+                <StackPanel Grid.Column="1"
+                            Margin="8,0,0,0">
+                    <TextBlock Text="{Binding Name}"
+                               Style="{StaticResource TitleTextBlockStyle}" />
+                    <TextBlock Text="{Binding Price}"
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               TextWrapping="NoWrap" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          DataContext="{Binding Source={StaticResource SampleDataSource}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="380*" />
+            <ColumnDefinition Width="1541*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Button Content="First"
+                    Click="ButtonFirst_Click"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="4" />
+            <Button Content="Middle"
+                    Click="ButtonMiddle_Click"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="4" />
+            <Button Content="Last"
+                    Click="ButtonLast_Click"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="4" />
+            <ToggleSwitch Header="IsAnimated"
+                          Margin="4"
+                          IsOn="{x:Bind myBehavior.IsScrollAnimated, Mode=TwoWay}" />
+        </StackPanel>
+        <ListView x:Name="listViewProducts"
+                  Grid.Column="1"
+                  ItemTemplate="{StaticResource ProductTemplate}"
+                  ItemsSource="{Binding Products}">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:ScrollSelectedItemIntoViewBehavior x:Name="myBehavior" />
+            </Interactivity:Interaction.Behaviors>
+        </ListView>
+    </Grid>
+</Page>
